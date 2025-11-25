@@ -9,8 +9,7 @@ import '../../models/cell_state.dart';
 
 class CellWidget extends StatefulWidget {
   final Cell cell;
-  final double cellWidth;
-  final double cellHeight;
+  final double cellSize;
   final int boardPosition;
   final VoidCallback onTap;
   final VoidCallback onLongPress;
@@ -18,14 +17,11 @@ class CellWidget extends StatefulWidget {
   const CellWidget({
     super.key,
     required this.cell,
-    required this.cellWidth,
-    required this.cellHeight,
+    required this.cellSize,
     required this.boardPosition,
     required this.onTap,
     required this.onLongPress,
   });
-
-  double get minDimension => cellWidth < cellHeight ? cellWidth : cellHeight;
 
   @override
   State<CellWidget> createState() => _CellWidgetState();
@@ -102,8 +98,8 @@ class _CellWidgetState extends State<CellWidget>
     final isExploded = widget.cell.state == CellState.exploded;
 
     Widget content = Container(
-      width: widget.cellWidth,
-      height: widget.cellHeight,
+      width: widget.cellSize,
+      height: widget.cellSize,
       decoration: BoxDecoration(
         color: _getCellColor(),
         border: Border.all(
@@ -163,7 +159,7 @@ class _CellWidgetState extends State<CellWidget>
   }
 
   Widget? _buildCellIcon() {
-    final iconSize = widget.minDimension * 0.5;
+    final iconSize = widget.cellSize * 0.5;
 
     switch (widget.cell.state) {
       case CellState.hidden:
@@ -207,8 +203,8 @@ class _CellWidgetState extends State<CellWidget>
       animation: _explosionController,
       builder: (context, child) {
         return SizedBox(
-          width: widget.cellWidth,
-          height: widget.cellHeight,
+          width: widget.cellSize,
+          height: widget.cellSize,
           child: CustomPaint(
             painter: ExplosionPainter(
               progress: _explosionController.value,

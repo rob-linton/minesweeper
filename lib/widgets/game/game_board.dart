@@ -24,7 +24,7 @@ class GameBoard extends ConsumerWidget {
         padding: EdgeInsets.zero,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: dimensions.columns,
-          childAspectRatio: dimensions.cellWidth / dimensions.cellHeight,
+          childAspectRatio: 1.0,
         ),
         itemCount: dimensions.totalCells,
         itemBuilder: (context, index) {
@@ -35,8 +35,7 @@ class GameBoard extends ConsumerWidget {
           return CellWidget(
             key: ValueKey('cell_${row}_$col'),
             cell: cell,
-            cellWidth: dimensions.cellWidth,
-            cellHeight: dimensions.cellHeight,
+            cellSize: dimensions.cellSize,
             boardPosition: row + col,
             onTap: () {
               ref.read(gameProviderFamily(dimensions).notifier).revealCell(row, col);
